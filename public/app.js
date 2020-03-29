@@ -8,10 +8,11 @@ fetchAndVisualizeData();
 
 function visualizeData(data) {
   visualizeMatchesPlayedPerYear(data.matchesPlayedPerYear);
-  visualizeMatchesPlayedPerYear2(data.mostWins);
-  visualizeMatchesPlayedPerYear3(data.extraRuns);
-  visualizeMatchesPlayedPerYear4(data.topEconomicalBowler);
-  visualizeMatchesPlayedPerYear5(data.mostmatchesWonAtVenue);
+  visualizeMostWins(data.mostWins);
+  visualizeExtraRuns(data.extraRuns);
+  visualizeTopEconomicalBowler(data.topEconomicalBowler);
+  visualizeMostMatchesWonAtVenue(data.mostmatchesWonAtVenue, data.mostWins);
+  visualizemostWinsPerSeason(data.mostWinsPerSeason, data.mostWins);
   return;
 }
 
@@ -53,48 +54,51 @@ function visualizeMatchesPlayedPerYear(matchesPlayedPerYear) {
   });
 }
 
-function visualizeMatchesPlayedPerYear2(mostWins) {
+function visualizeMostWins(mostWins) {
+  console.log("hi");
   const seriesData = [];
   for (let year in mostWins) {
     seriesData.push([year, mostWins[year]]);
   }
-  Highcharts.chart('container', {
+  Highcharts.chart("container", {
     chart: {
-        plotBackgroundColor: null,
-        plotBorderWidth: null,
-        plotShadow: false,
-        type: 'pie'
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false,
+      type: "pie"
     },
     title: {
-        text: 'Browser market shares in January, 2018'
+      text: "Browser market shares in January, 2018"
     },
     tooltip: {
-        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+      pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>"
     },
     accessibility: {
-        point: {
-            valueSuffix: '%'
-        }
+      point: {
+        valueSuffix: "%"
+      }
     },
     plotOptions: {
-        pie: {
-            allowPointSelect: true,
-            cursor: 'pointer',
-            dataLabels: {
-                enabled: false
-            },
-            showInLegend: true
-        }
+      pie: {
+        allowPointSelect: true,
+        cursor: "pointer",
+        dataLabels: {
+          enabled: false
+        },
+        showInLegend: true
+      }
     },
-    series: [{
-        name: 'Brands',
+    series: [
+      {
+        name: "Brands",
         colorByPoint: true,
         data: seriesData
-    }]
+      }
+    ]
   });
 }
 
-function visualizeMatchesPlayedPerYear3(extraRuns) {
+function visualizeExtraRuns(extraRuns) {
   const seriesData = [];
   for (let year in extraRuns) {
     seriesData.push([year, extraRuns[year]]);
@@ -104,7 +108,7 @@ function visualizeMatchesPlayedPerYear3(extraRuns) {
       type: "column"
     },
     title: {
-      text: "Matches Played Per Year"
+      text: "Extra Runs Conceded By Each Team in 2016"
     },
     subtitle: {
       text:
@@ -112,36 +116,36 @@ function visualizeMatchesPlayedPerYear3(extraRuns) {
     },
     xAxis: {
       title: {
-        text: "years"
+        text: "Teams"
       },
       type: "category"
     },
     yAxis: {
       min: 0,
       title: {
-        text: "Matches"
+        text: "Extra Runs"
       }
     },
     series: [
       {
-        name: "Matches",
+        name: "Extra Runs",
         data: seriesData
       }
     ]
   });
 }
 
-function visualizeMatchesPlayedPerYear4(topEconomicalBowler) {
-  const seriesData1 = [];
+function visualizeTopEconomicalBowler(topEconomicalBowler) {
+  const seriesData = [];
   for (let year in topEconomicalBowler) {
-    seriesData1.push([year, topEconomicalBowler[year]]);
+    seriesData.push([year, parseFloat(topEconomicalBowler[year])]);
   }
   Highcharts.chart("container3", {
     chart: {
       type: "column"
     },
     title: {
-      text: "Matches Played Per Year"
+      text: "Best Economy in Season 2016"
     },
     subtitle: {
       text:
@@ -149,56 +153,108 @@ function visualizeMatchesPlayedPerYear4(topEconomicalBowler) {
     },
     xAxis: {
       title: {
-        text: "years"
+        text: "Players"
       },
       type: "category"
     },
     yAxis: {
       min: 0,
       title: {
-        text: "Matches"
+        text: "Economy"
       }
     },
     series: [
       {
-        name: "Matches",
-        data: seriesData1
+        name: "Economy",
+        data: seriesData
       }
     ]
   });
 }
 
-function visualizeMatchesPlayedPerYear5(mostmatchesWonAtVenue) {
-  const seriesData = [];
-  for (let venue in mostmatchesWonAtVenue) {
-    seriesData.push([year, topEconomicalBowler[venue]]);
-  }
-Highcharts.chart('container4', {
-  chart: {
-      type: 'bar'
-  },
-  title: {
-      text: 'Stacked bar chart'
-  },
-  xAxis: {
-    type: "category"
-  },
-  yAxis: {
+function visualizeMostMatchesWonAtVenue(mostmatchesWonAtVenue, mostWins) {
+  const venues = Object.keys(mostmatchesWonAtVenue);
+  const teams = Object.keys(mostWins);
+  let seriesData = [];
+  seriesData = teams.map(team => ({
+    name: team,
+    data: venues.map(v => mostmatchesWonAtVenue[v][team] || 0)
+  }));
+
+  Highcharts.chart("container4", {
+    chart: {
+      type: "bar"
+    },
+    title: {
+      text: "Total Wins For Each Team At Venue"
+    },
+    xAxis: {
+      categories: venues
+    },
+    yAxis: {
       min: 0,
       title: {
-          text: 'Total fruit consumption'
+        text: "Total Wins"
       }
-  },
-  legend: {
+    },
+    legend: {
       reversed: true
-  },
-  plotOptions: {
+    },
+    plotOptions: {
       series: {
-          stacking: 'normal'
+        stacking: "normal"
       }
-  },
-  series: [{
-    data= seriesData
-  }]
+    },
+    series: seriesData
+  });
+}
+
+function visualizemostWinsPerSeason(mostWinsPerSeason, mostWins) {
+  const teams = Object.keys(mostWins);
+  const seasons=Object.keys(mostWinsPerSeason);
+  let seriesData=[];
+  seriesData = teams.map(team => ({
+    name: team,
+    data: seasons.map(season => mostWinsPerSeason[season][team] || 0)
+  }));
+
+  Highcharts.chart('container5', {
+    chart: {
+        type: 'column'
+    },
+    title: {
+        text: 'Total Wins Per Team Per Season'
+    },
+    subtitle: {
+        text: 'Source: IPL Dataset'
+    },
+    xAxis: {
+      title: {
+        text: "Teams"
+      },
+        categories: seasons,
+        crosshair: true
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Total Wins'
+        }
+    },
+    tooltip: {
+        headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+        pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+            '<td style="padding:0"><b>{point.y}</b></td></tr>',
+        footerFormat: '</table>',
+        shared: true,
+        useHTML: true
+    },
+    plotOptions: {
+        column: {
+            pointPadding: 0.2,
+            borderWidth: 0
+        }
+    },
+    series: seriesData
 });
 }

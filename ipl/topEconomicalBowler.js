@@ -44,7 +44,7 @@ function topEconomicalBowler(matches,deliveries,year){
 
     var objSorted = {}
     sortable.forEach(function(item){
-        objSorted[item[0]]=item[1].toFixed(2);
+        objSorted[item[0]]=parseFloat(item[1].toFixed(2));
     })
     //console.log(objSorted);
     return objSorted;
