@@ -13,6 +13,8 @@ function visualizeData(data) {
   visualizeTopEconomicalBowler(data.topEconomicalBowler);
   visualizeMostMatchesWonAtVenue(data.mostmatchesWonAtVenue, data.mostWins);
   visualizemostWinsPerSeason(data.mostWinsPerSeason, data.mostWins);
+  visualizemostDlWinner(data.mostDlWinner);
+  visualizemostManOfMatches(data.mostManOfMatches);
   return;
 }
 
@@ -69,6 +71,10 @@ function visualizeMostWins(mostWins) {
     },
     title: {
       text: "Wins By All the Teams"
+    },
+    subtitle: {
+      text:
+        'Source: <a href="https://www.kaggle.com/nowke9/ipldata/data">IPL Dataset</a>'
     },
     tooltip: {
       pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>"
@@ -188,6 +194,10 @@ function visualizeMostMatchesWonAtVenue(mostmatchesWonAtVenue, mostWins) {
     title: {
       text: "Total Wins For Each Team At Venue"
     },
+    subtitle: {
+      text:
+        'Source: <a href="https://www.kaggle.com/nowke9/ipldata/data">IPL Dataset</a>'
+    },
     xAxis: {
       categories: venues
     },
@@ -226,7 +236,8 @@ function visualizemostWinsPerSeason(mostWinsPerSeason, mostWins) {
         text: 'Total Wins Per Team Per Season'
     },
     subtitle: {
-        text: 'Source: IPL Dataset'
+      text:
+        'Source: <a href="https://www.kaggle.com/nowke9/ipldata/data">IPL Dataset</a>'
     },
     xAxis: {
       title: {
@@ -256,5 +267,83 @@ function visualizemostWinsPerSeason(mostWinsPerSeason, mostWins) {
         }
     },
     series: seriesData
+});
+}
+
+function visualizemostDlWinner(mostDlWinner) {
+  const seriesData = [];
+  for (let team in mostDlWinner) {
+    seriesData.push([team, mostDlWinner[team]]);
+  }
+
+  Highcharts.chart("container6", {
+    chart: {
+      type: "column"
+    },
+    title: {
+      text: "Most Matches Won By Teams (DL method)"
+    },
+    subtitle: {
+      text:
+        'Source: <a href="https://www.kaggle.com/nowke9/ipldata/data">IPL Dataset</a>'
+    },
+    xAxis: {
+      title: {
+        text: "Teams"
+      },
+      type: "category"
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: "Matches"
+      }
+    },
+    series: [
+      {
+        name: "Matches",
+        data: seriesData
+      }
+    ]
+  });
+}
+
+function visualizemostManOfMatches(mostManOfMatches) {
+  const seriesData = [];
+  for (let player in mostManOfMatches) {
+    seriesData.push([player, mostManOfMatches[player]]);
+  }
+Highcharts.chart('container7', {
+  chart: {
+    type: 'column'
+  },
+  title: {
+      text: 'Most Man of Matches Across All Seasons '
+  },
+
+  subtitle: {
+      text: 'Source: <a href="https://www.kaggle.com/nowke9/ipldata/data">IPL Dataset</a>'
+  },
+
+  xAxis: {
+    title: {
+      text: "Teams"
+    },
+    type: "category"
+  },
+  yAxis: {
+    min: 0,
+    title: {
+      text: "Matches"
+    }
+  },
+
+  series: [{
+      name: 'MOM',
+      colorByPoint: true,
+      data: seriesData,
+      showInLegend: false
+  }]
+
 });
 }

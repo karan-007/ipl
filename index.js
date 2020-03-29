@@ -6,6 +6,8 @@ const mostWinsPerSeason = require("./ipl//mostWinsPerSeason");
 const extraRuns = require("./ipl/extraRuns");
 const topEconomicalBowler = require("./ipl/topEconomicalBowler");
 const mostMatchesWonAtVenues = require("./ipl/mostMatchesWonAtVenue");
+const dlWinner = require("./ipl/dlWinner");
+const mostManOfMatches = require("./ipl/mostManOfMatches");
 
 const MATCHES_FILE_PATH = "./csv_data/matches.csv";
 const DELIVERIES_FILE_PATH = "./csv_data/deliveries.csv";
@@ -25,19 +27,23 @@ function main() {
       let result3 = extraRuns(matches,deliveries,'2016');
       let result4 = topEconomicalBowler(matches,deliveries,'2016');
       let result5 = mostMatchesWonAtVenues(matches);
-      saveMatchesPlayedPerYear(result,result1,result2,result3,result4,result5);
+      let result6 = dlWinner(matches);
+      let result7 = mostManOfMatches(matches);
+      saveMatchesPlayedPerYear(result,result1,result2,result3,result4,result5,result6,result7);
     });
     });
 }
 
-function saveMatchesPlayedPerYear(result,result1,result2,result3,result4,result5) {
+function saveMatchesPlayedPerYear(result,result1,result2,result3,result4,result5,result6,result7) {
   const jsonData = {
     matchesPlayedPerYear: result,
     mostWins:result1,
     mostWinsPerSeason:result2,
     extraRuns:result3,
     topEconomicalBowler:result4,
-    mostmatchesWonAtVenue:result5
+    mostmatchesWonAtVenue:result5,
+    mostDlWinner:result6,
+    mostManOfMatches:result7
   };
   const jsonString = JSON.stringify(jsonData);
   fs.writeFile(JSON_OUTPUT_FILE_PATH, jsonString, "utf8", err => {
