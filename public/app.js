@@ -68,7 +68,7 @@ function visualizeMostWins(mostWins) {
       type: "pie"
     },
     title: {
-      text: "Browser market shares in January, 2018"
+      text: "Wins By All the Teams"
     },
     tooltip: {
       pointFormat: "{series.name}: <b>{point.percentage:.1f}%</b>"
