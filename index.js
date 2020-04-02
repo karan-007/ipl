@@ -23,9 +23,7 @@ app.use(express.static("./public"));
 app.use(bodyParser.urlencoded({extended:false}));
 
 let port= process.env.PORT || 8080
-app.listen(port,() =>{
-  console.log("server is running"+port)
-})
+
 
 let allMatches={};
 let allDeliveries={};
@@ -37,6 +35,9 @@ csv()
     .then(deliveries => {
       allMatches=matches;
       allDeliveries=deliveries;
+      app.listen(port,() =>{
+        console.log("server is running"+port)
+      })
     });
 });
 
