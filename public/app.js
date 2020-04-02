@@ -9,7 +9,6 @@ fetchAndVisualizeData();
 function visualizeData(data) {
   visualizeMatchesPlayedPerYear(data.matchesPlayedPerYear);
   visualizeMostWins(data.mostWins);
-  visualizeExtraRuns(data.extraRuns);
   visualizeTopEconomicalBowler(data.topEconomicalBowler);
   visualizeMostMatchesWonAtVenue(data.mostmatchesWonAtVenue, data.mostWins);
   visualizemostWinsPerSeason(data.mostWinsPerSeason, data.mostWins);
@@ -57,7 +56,6 @@ function visualizeMatchesPlayedPerYear(matchesPlayedPerYear) {
 }
 
 function visualizeMostWins(mostWins) {
-  console.log("hi");
   const seriesData = [];
   for (let year in mostWins) {
     seriesData.push([year, mostWins[year]]);
@@ -104,42 +102,7 @@ function visualizeMostWins(mostWins) {
   });
 }
 
-function visualizeExtraRuns(extraRuns) {
-  const seriesData = [];
-  for (let year in extraRuns) {
-    seriesData.push([year, extraRuns[year]]);
-  }
-  Highcharts.chart("container2", {
-    chart: {
-      type: "column"
-    },
-    title: {
-      text: "Extra Runs Conceded By Each Team in 2016"
-    },
-    subtitle: {
-      text:
-        'Source: <a href="https://www.kaggle.com/nowke9/ipldata/data">IPL Dataset</a>'
-    },
-    xAxis: {
-      title: {
-        text: "Teams"
-      },
-      type: "category"
-    },
-    yAxis: {
-      min: 0,
-      title: {
-        text: "Extra Runs"
-      }
-    },
-    series: [
-      {
-        name: "Extra Runs",
-        data: seriesData
-      }
-    ]
-  });
-}
+
 
 function visualizeTopEconomicalBowler(topEconomicalBowler) {
   const seriesData = [];
@@ -347,3 +310,4 @@ Highcharts.chart('container7', {
 
 });
 }
+
