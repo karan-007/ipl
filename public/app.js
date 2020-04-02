@@ -22,7 +22,6 @@ function visualizeMatchesPlayedPerYear(matchesPlayedPerYear) {
   for (let year in matchesPlayedPerYear) {
     seriesData.push([year, matchesPlayedPerYear[year]]);
   }
-
   Highcharts.chart("matches-played-per-year", {
     chart: {
       type: "column"

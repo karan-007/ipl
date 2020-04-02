@@ -1,20 +1,33 @@
+let year = 0
 function showData() {
-  const season = document.getElementById("seasons1").value;
-  fetch("/economy?season=" + season)
+  year = document.getElementById("seasons1").value;
+  fetch("./extraRuns.json")
     .then(resp => resp.json())
-    .then(response => {
-      visualizeExtraRuns(response);
-      function visualizeExtraRuns(response) {
+    .then(visualizeData)
+    }
+
+function visualizeData(data){
+    visualizeExtraRuns(data.extraRuns)
+}
+
+      function visualizeExtraRuns(extraRuns) {
+          data={}
         const seriesData = [];
-        for (let team in response) {
-          seriesData.push([team, response[team]]);
+        for(let season in extraRuns){
+            if(season === year){
+                data=extraRuns[season]
+            }
         }
+        for(let team in data){
+            seriesData.push([team,data[team]]);
+        }
+        console.log(data)
         Highcharts.chart("container2", {
           chart: {
             type: "column"
           },
           title: {
-            text: `Extra Runs Conceded By Each Team in ${season}`
+            text: `Extra Runs Conceded By Each Team in ${year}`
           },
           subtitle: {
             text:
@@ -40,8 +53,6 @@ function showData() {
           ]
         });
       }
-    })
-    .catch(err => {
-      console.error("Error: ", err);
-    });
-}
+    
+    
+
