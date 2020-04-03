@@ -8,7 +8,7 @@ app.use(express.static("./public"));
 
 app.use(bodyParser.urlencoded({extended:false}));
 
-app.get('/economy', (req, res) => {
+app.get('/extra-runs', (req, res) => {
   const season = req.query.season;
   const result = someObject.extraRuns[season];
   res.send(result)

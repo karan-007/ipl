@@ -93,7 +93,7 @@ function visualizeMostWins(mostWins) {
     },
     series: [
       {
-        name: "Brands",
+        name: "Matches Won",
         colorByPoint: true,
         data: seriesData
       }

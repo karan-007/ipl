@@ -1,6 +1,6 @@
 function showData() {
     const season = document.getElementById("seasons1").value;
-    fetch("/economy?season=" + season)
+    fetch("/extra-runs?season=" + season)
       .then(resp => resp.json())
       .then(response => {
           visualizeExtraRuns(response);
