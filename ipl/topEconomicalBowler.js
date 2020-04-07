@@ -21,7 +21,7 @@ function topEconomicalBowler(matches,deliveries,year){
                 if(result[bowler]){
                     runs[bowler]+=parseInt(delivery.total_runs);
                     balls[bowler] += 1;
-                    balls[bowler] -+ count;
+                    balls[bowler] -= count;
                     result[bowler]=((runs[bowler]*6)/balls[bowler]);
                 }else{
                     runs[bowler]=parseInt(delivery.total_runs);
