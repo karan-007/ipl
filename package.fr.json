@@ -1,0 +1,19 @@
+{
+  "name": "",
+  "version": "",
+  "description": "",
+  "main": "",
+  "scripts": {
+    "start": ""
+  },
+  "author": "",
+  "license": "",
+  "dependencies": {
+    "body-parser": "",
+    "csvtojson": "",
+    "ejs": "",
+    "express": "",
+    "http-server": "",
+    "node-fetch": ""
+  }
+}
